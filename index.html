@@ -6,37 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
-    <title>Document </title>
+    <title>Trivia Game</title>
 
 </head>
 
 <body id="body">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top d-flex justify-content-center">
         <div class="container">
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
+            <a class="navbar-brand" href="#">Trivia Game</a>
+            <button type="button" class="btn btn-warning">START</button>
         </div>
     </nav>
       
@@ -48,11 +28,12 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
             <div class="carousel-inner" role="listbox">
+
             <!-- Slide One - Set the background image for this slide in the line below -->
                 <div class="carousel-item active" style="background-image: url('https://source.unsplash.com/RCAhiGJsUUE/1920x1080')">
                     <div class="carousel-caption d-none d-md-block">
-                        <h3 class="display-4">First Slide</h3>
-                        <p class="lead">This is a description for the first slide.</p>
+                        <h3 class="display-4">Question</h3>
+                        <p class="lead" id="question">This is a description for the first slide.</p>
                     </div>
                 </div>
                 <!-- Slide Two - Set the background image for this slide in the line below -->
@@ -84,8 +65,8 @@
       <!-- Page Content -->
     <section class="py-5">
         <div class="container">
-            <h1 class="font-weight-light">Half Page Image Slider</h1>
-            <p class="lead">The background images for the slider are set directly in the HTML using inline CSS. The images in this snippet are from <a href="https://unsplash.com">Unsplash</a>!</p>
+            <h1 class="font-weight-light">Answers:</h1>
+            <p class="lead" id="answerOne">The background images for the slider are set directly in the HTML using inline CSS. The images in this snippet are from <a href="https://unsplash.com">Unsplash</a>!</p>
         </div>
     </section>
 
