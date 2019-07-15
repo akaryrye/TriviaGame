@@ -2,31 +2,17 @@
 // an object containing arrays of questions and answers
 let trivia = {
 
-    a: ["This is sample question one", "This is sample question one, answer one", "This is sample question one, answer two", "This is sample question one, answer three", "This is sample question one, answer four"],
-    b: ["This is sample question two", "This is sample question two, answer one", "This is sample question two, answer two", "This is sample question two, answer three", "This is sample question two, answer four"],
-    c: ["This is sample question three", "This is sample question three, answer one", "This is sample question three, answer two", "This is sample question three, answer three", "This is sample question three, answer four"],
-    d: ["Question four", "Answer one", "Answer two", "Answer three", "Answer four"]
+    a: ["In this film's story, America is plagued by crime and overcrowded prisons. So, citizens are allowed to act out their murderous impulses for 12 hours once a year ?", "Scream", "The Purge", "The Devil's Rejects", "Hostel"],
+    b: ["What was Dorothy's last name in The Wizard of OZ?", "Doll", "Guild", "Wolfe", "Gale"],
+    c: ["Which movie is famous for the line: 'Say hello to my little friend' ?", "Scarface", "The Godfather", "American Gangster", "Bugbsy"],
+    d: ["Which transformer did Sam Witwicky drive and consider as his car in the 2007 Transformers movie ?", "Jazz", "Optimus Prime", "Ratchet", "Bumblebee"],
+    e: ["In what year was the first Friday the 13th released ?", "1980", "1975", "1985", "1990"],
+    f: ["In this Nicolas Cage movie he can see two minutes into his future ?", "Season of the Witch", "Knowing", "Next", "The Wicker Man"],
+    g: ["This actress plays Rosalie Hale in the Twilight Saga ?", "Nikki Reed", "Anna Kendrick", "Kristen Stewart", "Ashley Greene"],
+    h: ["What 2003 movie did Laurence Fishburne star as Smoke ?", "Assault on Precinct 13", "The Matrix Reloaded", "Mystic River", "Biker Boyz"],
+    i: ["Which movie starts with a police officer and his daughter touring the White House ?", "White House Down", "Air Force One", "Murder at 1600", "Olympus Has Fallen"],
+    j: ["In Star Trek The Motion Picture what was the alien phenomenon approaching Earth, destroying everything in its path ?", "Vulcans", "A meteor", "Voyager 6", "Klingons"]
 };
-
-let answers = ['1', '2', '3', '4']
-
-/* NOTES ...
- - How to know when the answer is the correct one???
- - How to display other questions
- - What to do after last item is displayed
-
- 1 . display question / answers and start timer
-    a. loop throung array from object, creating divs for each item
-    b. begin setTimeout (function will display times up screen)
-    c. clear the timeOut if correct or incorrect answer
-    
- 2. when any answer or timer is finished, display finish screen
-    a. if wrong answer, run the same function, but NOW
-    b. if right answer, run a "you won" function
-    c. 
-
- 3. display next question/ answers
-*/
 
 
 $(document).ready(function() {
@@ -37,6 +23,7 @@ $(document).ready(function() {
     let gameOn = false;
     let index = 0;
     let keys = Object.keys(trivia);
+    let answers = ['2', '4', '1', '4', '1', '3', '1', '4', '1', '3']
 
 //==============FUNCTIONSVILLE==============\\
 
@@ -44,21 +31,23 @@ $(document).ready(function() {
 
     // render questions and answers to the screen
     function showQandA (arr) {
-        $("#answer").empty();
+        if (index >= answers.length - 1 ) { index = 0 };
+        $("#answers").empty();
         $("#question").text(arr[0]);
         for (let i = 1; i <= 4; i++) {
-            $("#answer").append(arr[i] + "<br>");
+            $("#answers").append(`<div class="answer" data="${i}"> ${arr[i]} </div>`);
         }
+        clearTimeout(timeoutID);
         timeoutID = setTimeout( () => outOfTime(), 3000);
         gameOn = true;
-        
     }
 
     // clear answers and set variables for next turn
     function clearQandA () {
         index++;
         gameOn = false;
-        $("#answer").empty();
+        $("#answers").empty();
+        clearTimeout(timeoutID);
         timeoutID = setTimeout( () => showQandA(trivia[keys[index]]), 3000);
     }
 
@@ -70,35 +59,41 @@ $(document).ready(function() {
 
     // if right answer: clear timer and render win msg
     function youWin () {
-        clearTimeout(timeoutID);
         clearQandA();
         $("#question").text("YOU ARE CORRECT!");
     }
 
     // if wrong answer: clear timer, render msg
     function wrongAnswer () {
-        clearTimeout(timeoutID);
         clearQandA();
         $("#question").text("WRONG ANSWER");
     }
 
 
 //===========EVENTSVILLE===========\\
-    
-    $(document).on("keypress", (e) => {
-
-        // when "spacebar" presed 
-        if (e.which === 32 && gameOn === false) {
-            showQandA(trivia[keys[index]]);
-            
+    $(document).on("click", (e) => {
+        
+        if (gameOn === false) {
+            showQandA(trivia[keys[index]])
+        } else if ($(e.target).attr("class") === "answer") { 
+            if ($(e.target).attr("data") === answers[index]) {
+                youWin();
+            } else{
+                wrongAnswer();
+            }
         }
+    });
 
+
+    $(document).on("keypress", (e) => {
+        // when "spacebar" presed 
+        if (e.key === " " && gameOn === false) {
+            showQandA(trivia[keys[index]]);
+        }
         // when keys 1 - 4 are pressed and questions and answers are on screen
-        else if (e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' && gameOn === true) {
-
+        else if (gameOn === true && e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' ) {
             // if key pressed is right / wrong, show corresponsding msg
             if (e.key == answers[index]) {
-                console.log("success");
                 youWin();
             } else {
                 wrongAnswer();
@@ -106,4 +101,3 @@ $(document).ready(function() {
         }
     });
 });
-
