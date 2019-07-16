@@ -20,6 +20,7 @@ $(document).ready(function() {
 //============VARIABLESVILLE==============\\
 
     let timeoutID;
+    let countID;
     let gameOn = false;
     let index = 0;
     let keys = Object.keys(trivia);
@@ -38,7 +39,7 @@ $(document).ready(function() {
             $("#answers").append(`<div class="answer" data="${i}"> ${arr[i]} </div>`);
         }
         clearTimeout(timeoutID);
-        timeoutID = setTimeout( () => outOfTime(), 3000);
+        timeoutID = setTimeout( () => outOfTime(), 12000);
         gameOn = true;
     }
 
@@ -48,33 +49,48 @@ $(document).ready(function() {
         gameOn = false;
         $("#answers").empty();
         clearTimeout(timeoutID);
-        timeoutID = setTimeout( () => showQandA(trivia[keys[index]]), 3000);
+        clearInterval(countID);
+        timeoutID = setTimeout( () => showQandA(trivia[keys[index]]), 5000);
     }
 
     // if out of time: render "times up"
     function outOfTime () {
         clearQandA();
-        $("#question").text("TIMES UP");
+        $("#question").html('<img src="/assets/img/timeup.jpg"/>')
     }
 
     // if right answer: clear timer and render win msg
     function youWin () {
         clearQandA();
-        $("#question").text("YOU ARE CORRECT!");
+        let imgIdx = Math.floor(Math.random() * 5) + 1;
+        $("#question").html(`<img src="/assets/img/right${imgIdx}.jpg"/>`)
     }
 
     // if wrong answer: clear timer, render msg
     function wrongAnswer () {
         clearQandA();
-        $("#question").text("WRONG ANSWER");
+        //$("#question").text("WRONG ANSWER");
+        $("#question").html("<img src='/assets/img/wrong.jpg'/>")
     }
 
+    function countDown() {
+        let time = 12;
+        countID = setInterval( () => {
+            time--;
+            if (time == 0 ) {
+                clearInterval(countID)
+            }
+            $("#timer").html(`<div>${time}</div>`)
+            console.log(time)
+    }, 1000);  
+    }
 
 //===========EVENTSVILLE===========\\
     $(document).on("click", (e) => {
         
         if (gameOn === false) {
-            showQandA(trivia[keys[index]])
+            showQandA(trivia[keys[index]]);
+            countDown();
         } else if ($(e.target).attr("class") === "answer") { 
             if ($(e.target).attr("data") === answers[index]) {
                 youWin();
@@ -89,6 +105,7 @@ $(document).ready(function() {
         // when "spacebar" presed 
         if (e.key === " " && gameOn === false) {
             showQandA(trivia[keys[index]]);
+            countDown();
         }
         // when keys 1 - 4 are pressed and questions and answers are on screen
         else if (gameOn === true && e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' ) {
