@@ -57,20 +57,20 @@ $(document).ready(function() {
     // if out of time: render "times up"
     function outOfTime () {
         clearQandA();
-        $("#question").html('<img src="/assets/img/timeup.jpg"/>')
+        $("#question").html('<img src="assets/img/timeup.jpg"/>')
     }
 
     // if right answer: clear timer and render win msg
     function youWin () {
         clearQandA();
         let imgIdx = Math.floor(Math.random() * 5) + 1;
-        $("#question").html(`<img src="/assets/img/right${imgIdx}.jpg"/>`)
+        $("#question").html(`<img src="assets/img/right${imgIdx}.jpg"/>`)
     }
 
     // if wrong answer: clear timer, render msg
     function wrongAnswer () {
         clearQandA();
-        $("#question").html("<img src='/assets/img/wrong.jpg'/>")
+        $("#question").html("<img src='assets/img/wrong.jpg'/>")
     }
 
     function countDown() {
