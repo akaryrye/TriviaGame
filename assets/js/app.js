@@ -39,7 +39,8 @@ $(document).ready(function() {
             $("#answers").append(`<div class="answer" data="${i}"> ${arr[i]} </div>`);
         }
         clearTimeout(timeoutID);
-        timeoutID = setTimeout( () => outOfTime(), 12000);
+        //timeoutID = setTimeout( () => outOfTime(), 12000);
+        countDown()
         gameOn = true;
     }
 
@@ -69,7 +70,6 @@ $(document).ready(function() {
     // if wrong answer: clear timer, render msg
     function wrongAnswer () {
         clearQandA();
-        //$("#question").text("WRONG ANSWER");
         $("#question").html("<img src='/assets/img/wrong.jpg'/>")
     }
 
@@ -78,10 +78,10 @@ $(document).ready(function() {
         countID = setInterval( () => {
             time--;
             if (time == 0 ) {
-                clearInterval(countID)
+                clearInterval(countID);
+                outOfTime();
             }
-            $("#timer").html(`<div>${time}</div>`)
-            console.log(time)
+            $("#timer").html(`<div> ${time} seconds remaining</div>`)
     }, 1000);  
     }
 
@@ -90,7 +90,6 @@ $(document).ready(function() {
         
         if (gameOn === false) {
             showQandA(trivia[keys[index]]);
-            countDown();
         } else if ($(e.target).attr("class") === "answer") { 
             if ($(e.target).attr("data") === answers[index]) {
                 youWin();
@@ -105,7 +104,6 @@ $(document).ready(function() {
         // when "spacebar" presed 
         if (e.key === " " && gameOn === false) {
             showQandA(trivia[keys[index]]);
-            countDown();
         }
         // when keys 1 - 4 are pressed and questions and answers are on screen
         else if (gameOn === true && e.key === '1' || e.key === '2' || e.key === '3' || e.key === '4' ) {
